@@ -7,9 +7,6 @@ import 'package:gap/gap.dart';
 import 'package:netfliex/core/Utils/color.dart';
 import 'package:netfliex/core/Utils/text_styles.dart';
 import 'package:netfliex/core/constants/constant.dart';
-import 'package:netfliex/models/UpcomingModel.dart';
-import 'package:netfliex/models/nowplay_model.dart';
-import 'package:netfliex/services/api_services.dart';
 import 'package:netfliex/view/search_page.dart';
 import 'package:netfliex/view/view_model/home_cubit.dart';
 import 'package:netfliex/view/view_model/home_states.dart';
@@ -34,7 +31,7 @@ class _HomeviewState extends State<Homeview> {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = BlocProvider.of<moviesCubit>(context);
+    final cubit = context.watch<moviesCubit>();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -48,10 +45,10 @@ class _HomeviewState extends State<Homeview> {
         actions: [
           GestureDetector(
             onTap: () {
-              Navigator. pushReplacement(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SearchPage(),
+                    builder: (context) => const SearchPage(),
                   ));
             },
             child: Icon(
@@ -60,8 +57,8 @@ class _HomeviewState extends State<Homeview> {
               size: 30,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(right: 15, left: 15),
+          const Padding(
+            padding: EdgeInsets.only(right: 15, left: 15),
             child: CircleAvatar(
               radius: 25,
             ),
@@ -71,64 +68,57 @@ class _HomeviewState extends State<Homeview> {
       body: SingleChildScrollView(
         child: BlocBuilder<moviesCubit, moviesHomeStates>(
           builder: (context, state) {
-            if (state is moviesbyNowPlayErrorStates) {
-              return Text(state.error);
-            } else if (state is moviesbyNowPlaySuccessStates) {
-              TrendingModel movies = state.model;
-              return Padding(
-                padding: const EdgeInsets.only(top: 25),
-                child: Column(
-                  children: [
-                    CarouselSlider.builder(
-                      itemCount: movies.results.length,
-                      itemBuilder: (context, index, realIndex) {
-                        var moviesItem = movies.results?[index];
-                        return Container(
-                            width: 320,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(18)),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(18),
-                              child: Image.network(
-                                '$urlImage${moviesItem!.backdropPath}',
-                                fit: BoxFit.cover,
-                                filterQuality: FilterQuality.high,
-                              ),
-                            ));
-                      },
-                      options: CarouselOptions(
-                        height: 200,
-                        aspectRatio: 16 / 9,
-                        viewportFraction: 0.8,
-                        initialPage: 0,
-                        enableInfiniteScroll: true,
-                        reverse: false,
-                        autoPlay: true,
-                        autoPlayInterval: const Duration(seconds: 3),
-                        autoPlayAnimationDuration:
-                            const Duration(milliseconds: 800),
-                        autoPlayCurve: Curves.fastOutSlowIn,
-                        enlargeCenterPage: true,
-                        enlargeStrategy: CenterPageEnlargeStrategy.scale,
-                        scrollDirection: Axis.horizontal,
-                      ),
-                    ),
-                    Gap(20),
-                    NowPlaycard(
-                        headlinText: 'Trending', trendingmodel: state.model),
-                    UpcomingCard(
-                      headlinText: 'Upcoming',
-                      upcomingModel: cubit.upcomingModel,
-                    ),
-                  ],
-                ),
-              );
+            if (state is moviesbyNowPlayLoadingStates ||
+                state is moviesbyUpcomingLoadingStates) {
+              return const Center(child: CircularProgressIndicator());
             }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Center(child: CircularProgressIndicator()),
-              ],
+            return Padding(
+              padding: const EdgeInsets.only(top: 25),
+              child: Column(
+                children: [
+                  CarouselSlider.builder(
+                    itemCount: cubit.trendingModel.results.length,
+                    itemBuilder: (context, index, realIndex) {
+                      return Container(
+                          width: 320,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(18)),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(18),
+                            child: Image.network(
+                              '$urlImage${cubit.trendingModel.results[index].backdropPath}',
+                              fit: BoxFit.cover,
+                              filterQuality: FilterQuality.high,
+                            ),
+                          ));
+                    },
+                    options: CarouselOptions(
+                      height: 200,
+                      aspectRatio: 16 / 9,
+                      viewportFraction: 0.8,
+                      initialPage: 0,
+                      enableInfiniteScroll: true,
+                      reverse: false,
+                      autoPlay: true,
+                      autoPlayInterval: const Duration(seconds: 3),
+                      autoPlayAnimationDuration:
+                          const Duration(milliseconds: 800),
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      enlargeCenterPage: true,
+                      enlargeStrategy: CenterPageEnlargeStrategy.scale,
+                      scrollDirection: Axis.horizontal,
+                    ),
+                  ),
+                  const Gap(20),
+                  NowPlaycard(
+                      headlinText: 'Trending',
+                      trendingmodel: cubit.trendingModel),
+                  UpcomingCard(
+                    headlinText: 'Upcoming',
+                    upcomingModel: cubit.upcomingModel,
+                  ),
+                ],
+              ),
             );
           },
         ),

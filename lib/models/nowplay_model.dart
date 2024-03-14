@@ -26,23 +26,25 @@ class TrendingModel {
         totalResults: totalResults ?? this.totalResults,
       );
 
-  factory TrendingModel.fromRawJson(String str) => TrendingModel.fromJson(json.decode(str));
+  factory TrendingModel.fromRawJson(String str) =>
+      TrendingModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory TrendingModel.fromJson(Map<String, dynamic> json) => TrendingModel(
-    page: json["page"],
-    results: List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
-    totalPages: json["total_pages"],
-    totalResults: json["total_results"],
-  );
+        page: json["page"],
+        results:
+            List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
+        totalPages: json["total_pages"],
+        totalResults: json["total_results"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "page": page,
-    "results": List<dynamic>.from(results.map((x) => x.toJson())),
-    "total_pages": totalPages,
-    "total_results": totalResults,
-  };
+        "page": page,
+        "results": List<dynamic>.from(results.map((x) => x.toJson())),
+        "total_pages": totalPages,
+        "total_results": totalResults,
+      };
 }
 
 class Result {
@@ -120,55 +122,50 @@ class Result {
   String toRawJson() => json.encode(toJson());
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
-    adult: json["adult"],
-    backdropPath: json["backdrop_path"],
-    id: json["id"],
-    title: json["title"],
-    originalLanguage: originalLanguageValues.map[json["original_language"]]!,
-    originalTitle: json["original_title"],
-    overview: json["overview"],
-    posterPath: json["poster_path"],
-    mediaType: mediaTypeValues.map[json["media_type"]]!,
-    genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
-    popularity: json["popularity"]?.toDouble(),
-    releaseDate: DateTime.parse(json["release_date"]),
-    video: json["video"],
-    voteAverage: json["vote_average"]?.toDouble(),
-    voteCount: json["vote_count"],
-  );
+        adult: json["adult"] ?? '',
+        backdropPath: json["backdrop_path"] ?? '',
+        id: json["id"] ?? 0,
+        title: json["title"] ?? '',
+        originalLanguage:
+            originalLanguageValues.map[json["original_language"]] ??
+                OriginalLanguage.EN,
+        originalTitle: json["original_title"],
+        overview: json["overview"] ?? '',
+        posterPath: json["poster_path"] ?? '',
+        mediaType: mediaTypeValues.map[json["media_type"]] ?? MediaType.MOVIE,
+        genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
+        popularity: json["popularity"]?.toDouble(),
+        releaseDate: DateTime.parse(json["release_date"]),
+        video: json["video"] ?? '',
+        voteAverage: json["vote_average"]?.toDouble(),
+        voteCount: json["vote_count"] ?? 0,
+      );
 
   Map<String, dynamic> toJson() => {
-    "adult": adult,
-    "backdrop_path": backdropPath,
-    "id": id,
-    "title": title,
-    "original_language": originalLanguageValues.reverse[originalLanguage],
-    "original_title": originalTitle,
-    "overview": overview,
-    "poster_path": posterPath,
-    "media_type": mediaTypeValues.reverse[mediaType],
-    "genre_ids": List<dynamic>.from(genreIds.map((x) => x)),
-    "popularity": popularity,
-    "release_date": "${releaseDate.year.toString().padLeft(4, '0')}-${releaseDate.month.toString().padLeft(2, '0')}-${releaseDate.day.toString().padLeft(2, '0')}",
-    "video": video,
-    "vote_average": voteAverage,
-    "vote_count": voteCount,
-  };
+        "adult": adult,
+        "backdrop_path": backdropPath,
+        "id": id,
+        "title": title,
+        "original_language": originalLanguageValues.reverse[originalLanguage],
+        "original_title": originalTitle,
+        "overview": overview,
+        "poster_path": posterPath,
+        "media_type": mediaTypeValues.reverse[mediaType],
+        "genre_ids": List<dynamic>.from(genreIds.map((x) => x)),
+        "popularity": popularity,
+        "release_date":
+            "${releaseDate.year.toString().padLeft(4, '0')}-${releaseDate.month.toString().padLeft(2, '0')}-${releaseDate.day.toString().padLeft(2, '0')}",
+        "video": video,
+        "vote_average": voteAverage,
+        "vote_count": voteCount,
+      };
 }
 
-enum MediaType {
-  MOVIE
-}
+enum MediaType { MOVIE }
 
-final mediaTypeValues = EnumValues({
-  "movie": MediaType.MOVIE
-});
+final mediaTypeValues = EnumValues({"movie": MediaType.MOVIE});
 
-enum OriginalLanguage {
-  EN,
-  FR,
-  ZH
-}
+enum OriginalLanguage { EN, FR, ZH }
 
 final originalLanguageValues = EnumValues({
   "en": OriginalLanguage.EN,
