@@ -1,6 +1,7 @@
 
 
 import 'package:netfliex/models/UpcomingModel.dart';
+import 'package:netfliex/models/details_model.dart';
 import 'package:netfliex/models/nowplay_model.dart';
 import 'package:netfliex/models/search_model.dart';
 
@@ -37,4 +38,15 @@ class moviesbyNowPlaySuccessStates extends moviesHomeStates{
 class moviesbyNowPlayErrorStates extends moviesHomeStates{
   String error;
   moviesbyNowPlayErrorStates({required this.error});
+}
+
+//Details
+class  moviesDetailsLoadingStates extends  moviesHomeStates{}
+class  moviesDetailsSuccessStates extends  moviesHomeStates{
+  final DetailsModel model;
+  moviesDetailsSuccessStates( {required this.model});
+}
+class  moviesDetailsErrorStates extends  moviesHomeStates{
+  String error;
+  moviesDetailsErrorStates({required this.error});
 }

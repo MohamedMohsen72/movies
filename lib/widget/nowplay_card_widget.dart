@@ -4,6 +4,7 @@ import 'package:netfliex/core/Utils/text_styles.dart';
 import 'package:netfliex/core/constants/constant.dart';
 import 'package:netfliex/models/UpcomingModel.dart';
 import 'package:netfliex/models/nowplay_model.dart';
+import 'package:netfliex/view/details_view.dart';
 import 'package:netfliex/view/view_model/home_cubit.dart';
 import 'package:netfliex/view/view_model/home_states.dart';
 
@@ -38,17 +39,21 @@ class NowPlaycard extends StatelessWidget {
 
                 return Padding(
                   padding: const EdgeInsets.all(10),
-                  child: Container(
-                    height: 220,
-                    width: 160,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(
-                            '$urlImage${moviesItem!.posterPath}'),
-                        fit: BoxFit.cover,
-                        filterQuality: FilterQuality.high,
+                  child: InkWell(onTap: () {
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsView(),));
+                  },
+                    child: Container(
+                      height: 220,
+                      width: 160,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              '$urlImage${moviesItem!.posterPath}'),
+                          fit: BoxFit.cover,
+                          filterQuality: FilterQuality.high,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      borderRadius: BorderRadius.circular(20),
                     ),
                   ),
                 );

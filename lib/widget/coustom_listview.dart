@@ -5,6 +5,7 @@ import 'package:netfliex/core/Utils/color.dart';
 import 'package:netfliex/core/Utils/text_styles.dart';
 import 'package:netfliex/core/constants/constant.dart';
 import 'package:netfliex/models/search_model.dart';
+import 'package:netfliex/view/details_view.dart';
 import 'package:netfliex/view/view_model/home_cubit.dart';
 import 'package:netfliex/view/view_model/home_states.dart';
 import 'package:shaky_animated_listview/widgets/animated_listview.dart';
@@ -46,26 +47,30 @@ class SearchListView extends StatelessWidget {
                     itemCount: movies.results?.length,
                     itemBuilder: (BuildContext context, int index) {
                       var moviesitem = movies.results?[index];
-                      return Column(
-                        children: [
-                          Expanded(
-                            child: Image.network(
-                              '$urlImage${moviesitem!.posterPath}',
-                              height: 200,
-                              fit: BoxFit.cover,
+                      return InkWell(onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsView(movieId:moviesitem.id ),));
+                      },
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Image.network(
+                                '$urlImage${moviesitem!.posterPath}',
+                                height: 200,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                          Gap(15),
-                          Text(
-                            moviesitem.title,
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.ellipsis,
+                            Gap(15),
+                            Text(
+                              moviesitem.title,
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     },
                   ),
