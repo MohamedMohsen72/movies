@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "37821005998",
+    "project_id": "movies-2ccf2",
+    "storage_bucket": "movies-2ccf2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:37821005998:android:bac5a97b6911179e2b2d3f",
+        "android_client_info": {
+          "package_name": "com.example.netfliex"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbbEn2ev6Hme-gdvgJrm9D3be-RHP1Eig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

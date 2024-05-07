@@ -43,6 +43,11 @@ dependencies:
   flutter_bloc: ^8.1.4
   carousel_slider: ^4.2.1
   shaky_animated_listview: ^0.0.5
+  firebase_auth: ^4.19.1
+  firebase_core: ^2.29.0
+  firebase_storage: ^11.7.1
+  cloud_firestore: ^4.16.1
+  image_picker: ^1.1.0
 
 dev_dependencies:
   flutter_test:
