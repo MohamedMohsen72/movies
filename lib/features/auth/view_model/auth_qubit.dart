@@ -25,9 +25,6 @@ class AuthCubit extends Cubit<AuthStates> {
         'email': email,
         'image': '',
         'phone': '',
-        'bio': '',
-        'city': '',
-        'age': '',
       }, SetOptions(merge: true));//قابل للتعديل
       emit(RegisterSuccessStates());
     } on FirebaseAuthException catch (e) {

@@ -82,9 +82,15 @@ class SearchListView extends StatelessWidget {
             ),
           );
         } else {
-          return Padding(
-            padding: const EdgeInsets.only(top: 250),
-            child: const Center(child: CircularProgressIndicator(color: Colors.red,strokeAlign: 5,strokeWidth: 5,),),
+          return Center(
+
+            child: Column(
+              children: [
+                Gap(140),
+               Image.asset('assets/search.png',width: 100,),
+                Gap(11),
+                Text('No Result Found',style: getTextTitle(fontSize: 20),)
+            ],),
           );
         }
       },

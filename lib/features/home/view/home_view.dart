@@ -7,6 +7,7 @@ import 'package:gap/gap.dart';
 import 'package:netfliex/core/Utils/color.dart';
 import 'package:netfliex/core/Utils/text_styles.dart';
 import 'package:netfliex/core/constants/constant.dart';
+import 'package:netfliex/features/Details/view/details_view.dart';
 import 'package:netfliex/features/home/view/widget/nowplay_card_widget.dart';
 import 'package:netfliex/features/home/view/widget/upcoming_card_widget.dart';
 import 'package:netfliex/features/search/view/search_page.dart';
@@ -81,18 +82,28 @@ class _HomeviewState extends State<Homeview> {
                   CarouselSlider.builder(
                     itemCount: cubit.trendingModel.results.length,
                     itemBuilder: (context, index, realIndex) {
-                      return Container(
-                          width: 320,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(18)),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(18),
-                            child: Image.network(
-                              '$urlImage${cubit.trendingModel.results[index].backdropPath}',
-                              fit: BoxFit.cover,
-                              filterQuality: FilterQuality.high,
-                            ),
-                          ));
+
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                              builder: (context) => DetailsView(
+                              movieId:cubit.trendingModel.results[index].id)));
+                        },
+                        child: Container(
+                            width: 320,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(18)),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(18),
+                              child: Image.network(
+                                '$urlImage${cubit.trendingModel.results[index].backdropPath}',
+                                fit: BoxFit.cover,
+                                filterQuality: FilterQuality.high,
+                              ),
+                            )),
+                      );
                     },
                     options: CarouselOptions(
                       height: 200,
